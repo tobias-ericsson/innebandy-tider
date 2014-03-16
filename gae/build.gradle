@@ -26,28 +26,20 @@ repositories {
     mavenLocal()
 }
 
-/*
-configurations {
-    precompile
-}
-
-gaelykPrecompileGroovlet.runtimeClasspath += project.configurations.precompile
-gaelykPrecompileTemplate.runtimeClasspath += project.configurations.precompile
-*/
-
 dependencies {
     def gaeVersion = '1.8.0'
-    def groovyVersion = '2.1.3'
+    def groovyVersion = '2.2.1'
     groovy "org.codehaus.groovy:groovy-all:${groovyVersion}" 
 //    precompile "org.codehaus.groovy:groovy-ant:${groovyVersion}"     
 //    precompile "org.ow2.asm:asm:4.0" 
-//    precompile "commons-cli:commons-cli:1.2"  
+//    precompile "commons-cli:commons-cli:1.2"
+    compile 'org.ccil.cowan.tagsoup:tagsoup:1.2.1'
     compile "org.codehaus.groovy:groovy-json:${groovyVersion}"
     compile "org.codehaus.groovy:groovy-servlet:${groovyVersion}"    
     compile "com.google.appengine:appengine-api-1.0-sdk:$gaeVersion",
             "com.google.appengine:appengine-api-labs:$gaeVersion"
     compile 'org.gaelyk:gaelyk:2.0'
-    
+    compile 'junit:junit:4.11'
     
     gaeSdk "com.google.appengine:appengine-java-sdk:$gaeVersion"
 }
