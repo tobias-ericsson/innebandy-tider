@@ -1,60 +1,28 @@
 package parser
 
+import domain.Game
 import groovy.util.slurpersupport.GPathResult
 import org.xml.sax.SAXParseException
 import org.ccil.cowan.tagsoup.*
 
 /**
- * Takes an xml file as input and generates 
- * three files with lists of match data. 
- * For more information see 'Job test Backend.pdf'
  *
  * Created by Tobias Ericsson
  */
 class SportResultsXMLParser {
 
-    static void main(String[] args) {
-        println "* Sport Results XML Parser *\n"
-        if (args) {
-            String filePath = args[0]
-            File file = new File(filePath)
-            if (file.isFile() && file.canRead()) {
-                println "processing " + filePath + "\n"
-                createMatchListsAndTopListFiles(file)
-            } else {
-                println "can not read file: " + filePath
-            }
-        } else {
-            println "no file specified"
-        }
-    }
-
-    /**
-     * Takes an xml file as input and generates
-     * three files with lists of match data.
-     * For more information see 'Job test Backend.pdf'
-     * @param file
-     */
-    static void createMatchListsAndTopListFiles(File file) {
-        def (matchRows, topList) = generateMatchRowsAndTopList(file)
-        SportResultsFileWriter.createMatchListFileSortedAlphabetically(matchRows)
-        SportResultsFileWriter.createMatchListFileSortedOnNumberOfGoals(matchRows)
-        SportResultsFileWriter.createTopListFile(topList)
-    }
-
-
-    static def generateM(File xmlFile) {
+    static def parseGames(File xmlFile) {
         try {
             String text = xmlFile.getText("windows-1252")
             def rootNode = new XmlSlurper(new org.ccil.cowan.tagsoup.Parser()).parseText(text)
-            return generateM(rootNode)
+            return parseGames(rootNode)
         } catch (SAXParseException e) {
             println "Error in XML file: " + e.class.simpleName + ": " + e.message
             System.exit(1)
         }
     }
 
-    static def generateM(GPathResult rootNode) {
+    static def parseGames(GPathResult rootNode) {
         //println rootNode
         def allTables = rootNode.depthFirst().findAll { it.name().toString().toLowerCase().equals('table') }
         //println allTables
