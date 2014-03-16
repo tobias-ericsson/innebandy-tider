@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+#header {
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+}
+
+.body {
+    background-color: green;
+    color: #ffffff;
+    padding:10px;
+}
+
+#footer {
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+}
+
+h1 {
+    padding: 8px;
+    margin: 8px;
+    text-align: center;
+}
+
+p {
+    padding: 2px;
+    margin: 2px;
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+}

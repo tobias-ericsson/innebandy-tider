@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
-  <cron>
-    <url>/cron/ping</url>
-    <description>Ping http://innebandy-tider.rhcloud.com/</description>
-    <schedule>every 6 hours</schedule>
-  </cron>
-  <cron>
-    <url>/cron/pong</url>
-    <description>Pong http://innebandy-tider.rhcloud.com/</description>
-    <schedule>every 20 minutes</schedule>
-  </cron>
+    <cron>
+        <url>/cron/ping</url>
+        <description>Ping http://innebandy-tider.rhcloud.com/</description>
+        <schedule>every 6 hours</schedule>
+    </cron>
+    <cron>
+        <url>/cron/pong</url>
+        <description>Pong http://innebandy-tider.rhcloud.com/</description>
+        <schedule>every 70 minutes</schedule>
+    </cron>
+    <cron>
+        <url>/cron/parseScoreBoard?file=M1v14sd.txt</url>
+        <description>parse scoreboard from http://m-ligan.net/</description>
+        <schedule>every day 01:00</schedule>
+    </cron>
+    <cron>
+        <url>/cron/parseScoreBoard?file=M2v14sd.txt</url>
+        <description>parse scoreboard from http://m-ligan.net/</description>
+        <schedule>every day 01:15</schedule>
+    </cron>
+    <cron>
+        <url>/cron/parseScoreBoard?file=M3v14sd.txt</url>
+        <description>parse scoreboard from http://m-ligan.net/</description>
+        <schedule>every day 01:30</schedule>
+    </cron>
+    <cron>
+        <url>/cron/parseScoreBoard?file=M4v14sd.txt</url>
+        <description>parse scoreboard from http://m-ligan.net/</description>
+        <schedule>every day 01:45</schedule>
+    </cron>
+    <cron>
+        <url>/cron/updateScoreboard</url>
+        <description>update scoreboard on http://innebandy-tider.rhcloud.com/</description>
+        <schedule>every day 02:00</schedule>
+    </cron>
 </cronentries>
