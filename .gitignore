@@ -6,6 +6,7 @@ build
 */gradle/
 */.gradle/
 **.class
-gae/classes/*
+/gae/classes/**
 **/lib/**
 **.iml
+**exploded**
