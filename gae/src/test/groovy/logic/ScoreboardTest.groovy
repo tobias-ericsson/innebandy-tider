@@ -10,9 +10,9 @@ class ScoreboardTest extends GroovyTestCase {
 
     void testTeamStatsForGames() {
 
-        Game game1 = new Game(homeTeam: "Norrlands Guld",awayTeam: "Bitmine",awayGoals: 3,homeGoals: 2)
-        Game game2 = new Game(homeTeam: "Vejby",awayTeam: "Norrlands Guld",awayGoals: 5,homeGoals: 1)
-        Game game3 = new Game(homeTeam: "Snakebite",awayTeam: "Norrlands Guld",awayGoals: 1,homeGoals: 0, shoutOut: true)
+        Game game1 = new Game(homeTeam: "Norrlands Guld",awayTeam: "Bitmine",awayGoals: 3,homeGoals: 2,league: "M2")
+        Game game2 = new Game(homeTeam: "Vejby",awayTeam: "Norrlands Guld",awayGoals: 5,homeGoals: 1,league: "M2")
+        Game game3 = new Game(homeTeam: "Snakebite",awayTeam: "Norrlands Guld",awayGoals: 1,homeGoals: 0, shoutOut: true,league: "M2")
         List<Game> games = [game1,game2,game3]
 
         def teams = Scoreboard.teamStatsForGames(games)
@@ -25,6 +25,7 @@ class ScoreboardTest extends GroovyTestCase {
         assert norrlandsGuld.gamesPlayed == 3
         assert norrlandsGuld.win == 2
         assert norrlandsGuld.loss == 1
+        assert norrlandsGuld.league == "M2"
 
         teams.each {
             println it

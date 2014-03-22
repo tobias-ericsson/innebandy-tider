@@ -3,13 +3,17 @@ package logic
 import domain.Crud
 import domain.Game
 import domain.Team
+import groovyx.gaelyk.logging.GroovyLogger
 
 /**
  * Created by Tobias on 2014-03-16.
  */
 class Scoreboard {
 
+    static def log = new GroovyLogger(Scoreboard.simpleName)
+
     static Map<String, Team> teamStatsForLeagueYear(String league, Integer year) {
+        log.info league
         def games = Crud.readAllPlayedGamesForLeagueYear(league, year)
         return teamStatsForGames(games)
     }

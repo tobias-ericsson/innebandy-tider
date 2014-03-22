@@ -8,4 +8,4 @@ get "/cron/parse-schedule", forward: "/parseSchedule.groovy"
 get "/cron/update-scoreboard", forward: "/updateScoreboard.groovy"
 get "/cron/update-schedule", forward: "/updateSchedule.groovy"
 
-get "/stats/team-stats", forward: "/teamStats.groovy"
+get "/stats/team-stats/@year/@league/**", forward: "/teamStats.groovy?year=@year&league=@league"

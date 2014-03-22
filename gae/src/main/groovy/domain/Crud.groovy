@@ -1,6 +1,7 @@
 package domain
 
 import com.google.appengine.api.datastore.*
+import groovyx.gaelyk.logging.GroovyLogger
 import parser.Util
 
 import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit
@@ -9,6 +10,8 @@ import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit
  * Created by Tobias on 2014-03-16.
  */
 public abstract class Crud {
+
+    static def log = new GroovyLogger(Crud.simpleName)
 
     static void saveGame(Game game) {
         Entity entity = new Entity("game", game.key)
@@ -24,15 +27,17 @@ public abstract class Crud {
         entity.save()
     }
 
-    static List<Game> readAllPlayedGamesForLeagueYear(String league,Integer year) {
+    static List<Game> readAllPlayedGamesForLeagueYear(String league, int year) {
         // Get the Datastore Service
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService()
-        def query = new Query("game")
 
-        Query.FilterPredicate filter = new Query.FilterPredicate("league",Query.FilterOperator.EQUAL,league)
-        query.setFilter(filter)
-        filter = new Query.FilterPredicate("year",Query.FilterOperator.EQUAL,year)
-        query.setFilter(filter)
+        Query.FilterPredicate leagueFilter = new Query.FilterPredicate("league", Query.FilterOperator.EQUAL, league)
+        Query.FilterPredicate yearFilter = new Query.FilterPredicate("year", Query.FilterOperator.EQUAL, year)
+        Query.FilterPredicate beforeTodayFilter = new Query.FilterPredicate("date",
+                Query.FilterOperator.LESS_THAN_OR_EQUAL, Util.today())
+        Query.Filter compositeFilter = Query.CompositeFilterOperator.and(leagueFilter, yearFilter, beforeTodayFilter)
+        def query = new Query("game").setFilter(compositeFilter)
+
         /*
         filter = new Query.FilterPredicate("date",Query.FilterOperator.LESS_THAN_OR_EQUAL, Util.today())
         query.setFilter(filter)*/
@@ -42,6 +47,7 @@ public abstract class Crud {
 
         List<Game> gameList = []
         entities.each {
+            log.info(it.toString())
             gameList.add(mapEntityToGame(it))
         }
         return gameList
