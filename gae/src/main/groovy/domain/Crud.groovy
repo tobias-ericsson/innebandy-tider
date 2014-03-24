@@ -13,18 +13,63 @@ public abstract class Crud {
 
     static def log = new GroovyLogger(Crud.simpleName)
 
+    static String createId(Game game) {
+        String id = game.league + "-" + game.date + "-" + game.homeTeam + "-" + game.awayTeam
+        return URLEncoder.encode(id.replaceAll(" ", ""), "UTF-8")
+    }
+
     static void saveGame(Game game) {
-        Entity entity = new Entity("game", game.key)
-        entity.year = game.year
-        entity.date = game.date
-        entity.time = game.time
-        entity.homeTeam = game.homeTeam
-        entity.awayTeam = game.awayTeam
-        entity.homeGoals = game.homeGoals
-        entity.awayGoals = game.awayGoals
-        entity.shoutOut = game.shoutOut
-        entity.league = game.league
-        entity.save()
+        game.id = createId(game)
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService()
+        String today = Util.today()
+        Entity entity
+        try {
+            entity = datastore.get("game", game.id)
+        } catch (EntityNotFoundException e) {
+            log.info(e.getMessage() + ", will create new...")
+            entity = new Entity("game", game.id)
+            entity.id = game.id
+            entity.year = game.year
+            entity.date = game.date
+            entity.homeTeam = game.homeTeam
+            entity.awayTeam = game.awayTeam
+            entity.league = game.league
+            entity.updated = today
+        }
+
+        if (shouldUpdate(entity.time, game.time)) {
+            entity.time = game.time
+            entity.updated = today
+        }
+
+        if (shouldUpdate(entity.homeGoals, game.homeGoals)) {
+            entity.homeGoals = game.homeGoals
+            entity.updated = today
+        }
+
+        if (shouldUpdate(entity.awayGoals, game.awayGoals)) {
+            entity.awayGoals = game.awayGoals
+            entity.updated = today
+        }
+
+        if (shouldUpdate(entity.shoutOut, game.shoutOut)) {
+            entity.shoutOut = game.shoutOut
+            entity.updated = today
+        }
+
+        if (today.equals(entity.updated)) {
+            log.info("saving " + entity.id + " : " + entity.updated)
+            entity.save()
+        }
+    }
+
+    static boolean shouldUpdate(oldParam, newParam) {
+        if (newParam) {
+            if (newParam != oldParam) {
+                return true
+            }
+        }
+        return false
     }
 
     static List<Game> readAllPlayedGamesForLeagueYear(String league, int year) {
@@ -43,7 +88,7 @@ public abstract class Crud {
         query.setFilter(filter)*/
 
         PreparedQuery preparedQuery = datastore.prepare(query)
-        def entities = preparedQuery.asList(withLimit(100))
+        def entities = preparedQuery.asList(withLimit(500))
 
         List<Game> gameList = []
         entities.each {
@@ -51,6 +96,10 @@ public abstract class Crud {
             gameList.add(mapEntityToGame(it))
         }
         return gameList
+    }
+
+    static List<Game> readAllGamesUpdatedAfter(String updatedDateTime) {
+        return []
     }
 
     static List<Game> readAllGames() {
@@ -70,7 +119,7 @@ public abstract class Crud {
         PreparedQuery preparedQuery = datastore.prepare(query)
 
 // return only the first 10 results
-        def entities = preparedQuery.asList(withLimit(100))
+        def entities = preparedQuery.asList(withLimit(500))
 
         List<Game> gameList = []
         entities.each {
@@ -80,23 +129,18 @@ public abstract class Crud {
         return gameList
     }
 
-    private static Game mapEntityToGame(Entity game) {
+    private static Game mapEntityToGame(Entity entity) {
         Game g = new Game()
-        g.key = game.key
-        g.year = game.year
-        g.date = game.date
-        g.time = game.time
-        g.homeTeam = game.homeTeam
-        g.awayTeam = game.awayTeam
-        g.homeGoals = game.homeGoals
-        if (game.awayGoals instanceof String) {
-            //todo fix
-            g.awayGoals = 99
-        } else {
-            g.awayGoals = game.awayGoals
-        }
-        g.shoutOut = game.shoutOut
-        g.league = game.league
+        g.year = entity.year
+        g.date = entity.date ? entity.date : "-"
+        g.time = entity.time ? entity.time : "-"
+        g.homeTeam = entity.homeTeam
+        g.awayTeam = entity.awayTeam
+        g.homeGoals = entity.homeGoals
+        g.awayGoals = entity.awayGoals
+        g.shoutOut = entity.shoutOut
+        g.league = entity.league
+        g.id = entity.id ? createId(g) : createId(g)
         return g
     }
 }

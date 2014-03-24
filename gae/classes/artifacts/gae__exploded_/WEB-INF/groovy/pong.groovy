@@ -1,6 +1,4 @@
-import domain.Crud
-
-def targetUrl = 'http://innebandy-tider.rhcloud.com/?sportig=pong'
+def targetUrl = domain.Properties.TARGET_URL
 
 log.info("pong " + targetUrl)
 

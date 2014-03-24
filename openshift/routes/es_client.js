@@ -58,7 +58,7 @@ exports.search = function (request, response) {
     };
 
     client.search({
-        index: 'matcher',
+        index: 'floorball',
         size: 70,
         sort: sort,
         body: {
@@ -84,8 +84,8 @@ exports.post = function (request, response) {
     if (data.date && data.time && data.place) {
         var id = data.date + ":" + data.time + ":" + data.place;
         client.create({
-            index: 'matcher',
-            type: 'innebandy-match',
+            index: 'floorball',
+            type: 'game',
             id: id,
             body: data
         }, function (error, resp) {

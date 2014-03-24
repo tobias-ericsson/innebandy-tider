@@ -135,9 +135,9 @@ var mySpace = function () {
 
     function pushGamesToViewModel(games) {
         for (index in games) {
-            //log("game " + index);
-            var source = games[index]._source;
-            //log(JSON.stringify(source));
+            log("game " + index);
+            var source = games[index]._source.doc;
+            log(JSON.stringify(source));
             myViewModel.games.push(new Game(source));
         }
     }

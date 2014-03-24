@@ -8,7 +8,7 @@
     <cron>
         <url>/cron/pong</url>
         <description>Pong http://innebandy-tider.rhcloud.com/</description>
-        <schedule>every 70 minutes</schedule>
+        <schedule>every 110 minutes</schedule>
     </cron>
     <cron>
         <url>/cron/parseScoreBoard?file=M1v14sd.txt</url>
@@ -34,5 +34,15 @@
         <url>/cron/updateScoreboard</url>
         <description>update scoreboard on http://innebandy-tider.rhcloud.com/</description>
         <schedule>every day 02:00</schedule>
+    </cron>
+    <cron>
+        <url>/cron/parseSchedule</url>
+        <description>parse schedule from http://m-ligan.net/</description>
+        <schedule>every day 06:00</schedule>
+    </cron>
+    <cron>
+        <url>/cron/updateSchedule</url>
+        <description>update schedule on http://innebandy-tider.rhcloud.com/</description>
+        <schedule>every day 07:00</schedule>
     </cron>
 </cronentries>

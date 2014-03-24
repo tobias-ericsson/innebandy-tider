@@ -1,4 +1,4 @@
-def targetUrl = 'http://innebandy-tider.rhcloud.com/?sportig=ping'
+def targetUrl = domain.Properties.TARGET_URL
 
 log.info("ping " + targetUrl)
 

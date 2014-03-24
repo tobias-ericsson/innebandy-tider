@@ -13,7 +13,7 @@ class Util {
                 maybeAddZero(cal.get(Calendar.DAY_OF_MONTH))*/
 
         Date date = new Date()
-        String today = date.format("YYYY-MM-dd")
+        String today = date.format("YYYY-MM-dd hh:mm")
         return today
     }
 

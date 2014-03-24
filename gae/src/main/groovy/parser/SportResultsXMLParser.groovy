@@ -1,6 +1,7 @@
 package parser
 
 import domain.Game
+import groovy.json.JsonBuilder
 import groovy.util.slurpersupport.GPathResult
 import org.xml.sax.SAXParseException
 import org.ccil.cowan.tagsoup.*
@@ -11,15 +12,19 @@ import org.ccil.cowan.tagsoup.*
  */
 class SportResultsXMLParser {
 
-    static def parseGames(File xmlFile) {
+    static def parseGames(String text) {
         try {
-            String text = xmlFile.getText("windows-1252")
-            def rootNode = new XmlSlurper(new org.ccil.cowan.tagsoup.Parser()).parseText(text)
+            def rootNode = new XmlSlurper(new Parser()).parseText(text)
             return parseGames(rootNode)
         } catch (SAXParseException e) {
             println "Error in XML file: " + e.class.simpleName + ": " + e.message
             System.exit(1)
         }
+    }
+
+    static def parseGames(File xmlFile) {
+        String text = xmlFile.getText("windows-1252")
+        parseGames(text)
     }
 
     static def parseGames(GPathResult rootNode) {
@@ -33,8 +38,8 @@ class SportResultsXMLParser {
         List games = []
         int maybeOne = 0
         allTables.eachWithIndex { table, tableIndex ->
-
-            table.tbody.tr.eachWithIndex { tr, trIndex ->
+            //todo investigate removed tbody here
+            table.tr.eachWithIndex { tr, trIndex ->
                 if (trIndex == 0) {
                     println '*********************'
                 }
@@ -61,14 +66,12 @@ class SportResultsXMLParser {
                             }
 
                         }
-
-
                     }
                     if (trIndex == 1) {
                         headers.put(tdIndex, s)
                     } else if (trIndex > 1) {
 
-                        String header = headers.get(tdIndex-maybeOne)
+                        String header = headers.get(tdIndex - maybeOne)
 
                         switch (header) {
                             case "Klockan":
@@ -77,27 +80,28 @@ class SportResultsXMLParser {
                                     game = new Game()
                                 }
                                 game.date = currentDate
+                                game.year = Integer.parseInt(currentDate.substring(0, 4))
                                 game.time = s
                                 break
                             case "Bana":
                                 game.place = s
                                 break
                             case "Serie":
-                                game.serie = s
+                                game.league = s
                                 break
                             case "Hemma":
-                                game.homeTeam = teams.get(s)?:s
+                                game.homeTeam = teams.get(s) ?: s
                                 break
                             case "Borta":
-                                game.awayTeam = teams.get(s)?:s
+                                game.awayTeam = teams.get(s) ?: s
                                 if (game.time) {
                                     games << game
                                     game = new Game()
                                 }
                                 break
-                            default:""
-                                //print "default |" + s + "*" + tdIndex
-                                //println "|"
+                            default: ""
+                        //print "default |" + s + "*" + tdIndex
+                        //println "|"
 
                         }
                     }
@@ -109,6 +113,7 @@ class SportResultsXMLParser {
                 }
                 maybeOne = 0
                 //println "headers: " + headers
+                //todo not useful?
                 if (game.time) {
                     games << game
                 }
@@ -120,10 +125,9 @@ class SportResultsXMLParser {
 
         println "games " + games
 
-        def json = new groovy.json.JsonBuilder(["games": games])
+        //def json = new JsonBuilder(["games": games])
         //def result1 = json {games}
-
-        println json.toPrettyString()
+        //println json.toPrettyString()
         return games
     }
 

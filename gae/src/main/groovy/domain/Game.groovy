@@ -1,23 +1,24 @@
 package domain
 
 public class Game {
-	String key;
-    String league;
-    String homeTeam;
-    String awayTeam;
-    Integer homeGoals;
-    Integer awayGoals;
-    String time;
-    String date;
-    Integer year;
+	String id
+    String league
+    String homeTeam
+    String awayTeam
+    Integer homeGoals
+    Integer awayGoals
+    String time
+    String date
+    Integer year
     String score;
-    Boolean shoutOut;
+    Boolean shoutOut
+    String place
 
 
     @Override
     public String toString() {
         return "Game{" +
-                "key='" + key + '\'' +
+                "id='" + id + '\'' +
                 ", league='" + league + '\'' +
                 ", homeTeam='" + homeTeam + '\'' +
                 ", awayTeam='" + awayTeam + '\'' +
