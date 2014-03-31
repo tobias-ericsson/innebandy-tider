@@ -32,6 +32,10 @@ if ('development' == app.get('env')) {
 app.get('/search/*', esClient.search);
 app.post('/search/*', esClient.search);
 
-http.createServer(app).listen(prop.portNode, prop.ipNode, function () {
-    console.log(new Date()+'\nServer running on ' + prop.ipNode + ':' + prop.portNode);
-});
+try {
+    http.createServer(app).listen(prop.portNode, prop.ipNode, function () {
+        console.log(new Date() + '\nServer running on ' + prop.ipNode + ':' + prop.portNode);
+    });
+} catch (e) {
+    console.log(e);
+}
