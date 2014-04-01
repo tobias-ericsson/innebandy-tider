@@ -195,6 +195,7 @@ body {
 a {
     color: #663300;
     text-decoration: none;
+    /*
     padding: 2px;
     padding-left: 20px;
     padding-right: 20px;
@@ -203,7 +204,7 @@ a {
     margin-right: 10px;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
-    border-radius: 8px;
+    border-radius: 8px;*/
 }
 
 a:visited {
@@ -233,6 +234,25 @@ a:hover {
 
 .item h3 {
 
+}
+
+th {
+    text-align: center;
+    color: #660000;
+    padding:3px;
+}
+
+td {
+    border-bottom: 1px black solid;
+    text-align: center;
+    color: #663300;
+    padding: 2px;
+    margin: 2px;
+}
+
+tr {
+    padding: 0;
+    margin: 0;
 }
 
 

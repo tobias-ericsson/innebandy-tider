@@ -30,7 +30,7 @@ exports.interceptRequest = function (request, response, next) {
 
             if (prop.interceptPaths[index].server.indexOf("appspot") != -1) {
                 console.log("appspot special case");
-                return requestFromAppspot(request, function (resp) {
+                return requestFromAppspot(request, prop.interceptPaths[index].server, function (resp) {
                     response.send(resp);
                 });
             } else {
@@ -50,9 +50,13 @@ proxy.on('error', function (e) {
     console.log("error", e);
 });
 
-requestFromAppspot = function (req, callback) {
+requestFromAppspot = function (req, server, callback) {
+
+    var uri = server+req.path;
+    console.log("path "+uri);
+
     request({
-        uri: "http://l-tribe.appspot.com/stats/team-stats/2014/M1/",
+        uri: uri,
         method: "GET",
         timeout: 10000,
         followRedirect: true,

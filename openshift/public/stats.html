@@ -14,6 +14,42 @@
 
         <h2>Innebandyserien där vi spelar ofta och länge</h2>
     </div>
+
+    <div id="content_area">
+
+
+        <p class="game" data-bind="visible: teams().length==0">Inga lag funna</p>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Rank</th>
+                <th><a href="#" data-bind="click: sortBy_name">Lag</a></th>
+                <th>Matcher</th>
+                <th><a href="#" data-bind="click: sortBy_win">Vinster</a></th>
+                <th><a href="#" data-bind="click: sortBy_loss">Förluster</a></th>
+                <th>Straffar</th>
+                <th>Mål</th>
+                <th><a href="#" data-bind="click: sortBy_points">Poäng</a></th>
+            </tr>
+            </thead>
+            <tbody data-bind="foreach: teams">
+            <tr>
+                <td>1</td>
+                <td data-bind="text: team.name"></td>
+                <td data-bind="text: team.gamesPlayed"></td>
+                <td data-bind="text: team.win"></td>
+                <td data-bind="text: team.loss"></td>
+                <td data-bind="text: team.draw"></td>
+                <td><span data-bind="text: team.goalsFor"></span> - <span data-bind="text: team.goalsAgainst"></span>
+                </td>
+                <td data-bind="text: team.points"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
     <script src="js/stats.js"></script>
