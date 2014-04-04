@@ -18,8 +18,7 @@ class ScoreboardTest extends GroovyTestCase {
         def teams = Scoreboard.teamStatsForGames(games)
 
         Team norrlandsGuld = teams.get("Norrlands Guld")
-        //todo fix
-        /*
+
         assert norrlandsGuld.goalsFor == 8
         assert norrlandsGuld.points == 5
         assert norrlandsGuld.goalsAgainst == 4
@@ -27,7 +26,7 @@ class ScoreboardTest extends GroovyTestCase {
         assert norrlandsGuld.win == 2
         assert norrlandsGuld.loss == 1
         assert norrlandsGuld.league == "M2"
-*/
+
         teams.each {
             println it
         }

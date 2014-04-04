@@ -21,7 +21,7 @@ class Scoreboard {
     static Map<String, Team> teamStatsForGames(def games) {
         Map<String, Team> teams = new HashMap<>()
         games.each { Game game ->
-            if (game.homeGoals && game.awayGoals) {
+            if (game.homeGoals != null && game.awayGoals != null) {
                 Team homeTeam = teams.get(game.homeTeam, new Team(name: game.homeTeam, league: game.league))
                 Team awayTeam = teams.get(game.awayTeam, new Team(name: game.awayTeam, league: game.league))
                 int points = game.shoutOut ? 2 : 3
@@ -36,6 +36,7 @@ class Scoreboard {
                 }
                 homeTeam.gamesPlayed += 1
                 awayTeam.gamesPlayed += 1
+
                 homeTeam.goalsFor += game.homeGoals
                 homeTeam.goalsAgainst += game.awayGoals
                 awayTeam.goalsFor += game.awayGoals
