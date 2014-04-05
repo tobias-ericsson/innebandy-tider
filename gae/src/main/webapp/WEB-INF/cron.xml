@@ -31,14 +31,19 @@
         <schedule>every day 01:45</schedule>
     </cron>
     <cron>
+        <url>/cron/parseScoreBoard?file=M5v14sd.txt</url>
+        <description>parse scoreboard from http://m-ligan.net/</description>
+        <schedule>every day 02:00</schedule>
+    </cron>
+    <cron>
         <url>/cron/updateScoreboard</url>
         <description>update scoreboard on http://innebandy-tider.rhcloud.com/</description>
-        <schedule>every day 02:00</schedule>
+        <schedule>every day 02:15</schedule>
     </cron>
     <cron>
         <url>/cron/parseSchedule</url>
         <description>parse schedule from http://m-ligan.net/</description>
-        <schedule>every day 06:00</schedule>
+        <schedule>every day 06:45</schedule>
     </cron>
     <cron>
         <url>/cron/updateSchedule</url>
