@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
     <title>Innebandy Tider</title>
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
     <link href="css/style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
@@ -13,40 +15,59 @@
         <h1>M-LIGAN</h1>
 
         <h2>Innebandyserien där vi spelar ofta och länge</h2>
+        <br/>
     </div>
 
     <div id="content_area">
 
-
-        <p class="game" data-bind="visible: teams().length==0">Inga lag funna</p>
-
-        <table>
+        <table class="tab">
             <thead>
-            <tr>
-                <th>Rank</th>
-                <th><a href="#" data-bind="click: sortBy_name">Lag</a></th>
-                <th>Matcher</th>
-                <th><a href="#" data-bind="click: sortBy_win">Vinster</a></th>
-                <th><a href="#" data-bind="click: sortBy_loss">Förluster</a></th>
-                <th>Straffar</th>
-                <th>Mål</th>
-                <th><a href="#" data-bind="click: sortBy_points">Poäng</a></th>
+            <tr data-bind="foreach: tabs">
+                <th><a class="tab" href="#"
+                       data-bind="click: setSelected,
+                       css: {selectedTab: id === $parent.currentTab(),
+                       leftOfSelectedTab: (id+1) === $parent.currentTab(),
+                       rightOfSelectedTab: (id-1) === $parent.currentTab()},
+                       text: name"></a>
+                </th>
             </tr>
             </thead>
-            <tbody data-bind="foreach: teams">
-            <tr>
-                <td>1</td>
-                <td data-bind="text: team.name"></td>
-                <td data-bind="text: team.gamesPlayed"></td>
-                <td data-bind="text: team.win"></td>
-                <td data-bind="text: team.loss"></td>
-                <td data-bind="text: team.draw"></td>
-                <td><span data-bind="text: team.goalsFor"></span> - <span data-bind="text: team.goalsAgainst"></span>
-                </td>
-                <td data-bind="text: team.points"></td>
-            </tr>
-            </tbody>
         </table>
+
+        <div id="tabs_container">
+
+            <table class="stats">
+                <thead>
+                <tr>
+                    <th style="text-align: left;min-width: 130px;"><a data-bind="click: sortBy_name">Lag</a>
+                    </th>
+                    <th style="min-width: 50px;"><a href="#" data-bind="click: sortBy_gamesPlayed">Matcher</a></th>
+                    <th style="min-width: 50px;"><a href="#" data-bind="click: sortBy_win">Vinst</a></th>
+                    <th style="min-width: 50px;"><a href="#" data-bind="click: sortBy_loss">Förlust</a></th>
+                    <th style="min-width: 65px;">Straffar</th>
+                    <th style="min-width: 65px;">Mål</th>
+                    <th style="text-align: right;min-width: 40px;">
+                        <a href="#" data-bind="click: sortBy_points">Poäng</a></th>
+                </tr>
+                </thead>
+                <tr data-bind="visible: teams().length==0">
+                    <td colspan="8"><p class="game" data-bind="visible: teams().length==0">Inga lag funna</p></td>
+                </tr>
+                <tbody data-bind="foreach: teams">
+                <tr>
+                    <td style="text-align: left" data-bind="text: team.name"></td>
+                    <td data-bind="text: team.gamesPlayed"></td>
+                    <td data-bind="text: team.win"></td>
+                    <td data-bind="text: team.loss"></td>
+                    <td data-bind="text: team.draw"></td>
+                    <td><span data-bind="text: team.goalsFor"></span> - <span
+                            data-bind="text: team.goalsAgainst"></span>
+                    </td>
+                    <td style="text-align: right" data-bind="text: team.points"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 

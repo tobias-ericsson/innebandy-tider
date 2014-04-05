@@ -1,12 +1,33 @@
 var stats = function () {
     var myViewModel = {
         teams: ko.observableArray([]),
-        addSort: addSort
+        addSort: addSort,
+        fetchLeagueStats: fetchLeagueStats,
+        selectTab: selectTab,
+        currentTab: ko.observable(1),
+        tabs: ko.observableArray([])
     };
     myViewModel.addSort('name');
+    myViewModel.addSort('gamesPlayed');
     myViewModel.addSort('win');
     myViewModel.addSort('loss');
     myViewModel.addSort('points');
+    pushTabsToViewModel();
+
+    function pushTabsToViewModel() {
+        var nbrOfLeagues = 5;
+        for (var k = 1; k <= nbrOfLeagues; k++) {
+            myViewModel.tabs.push(new Tab(k));
+        }
+    }
+
+    function Tab(id) {
+        var self = this;
+        self.id = id;
+        self.name = "M"+id;
+        self.selected = ko.observable();
+        self.setSelected = selectTab;
+    }
 
     $(document).ready(function () {
         log("doc is ready stats");
@@ -15,6 +36,17 @@ var stats = function () {
 
         fetchStats({'url': '/stats/team-stats/2014/M1/'});
     });
+
+    function selectTab(tab) {
+        console.log("selected " + tab.name);
+        myViewModel.currentTab(tab.id);
+        var url = '/stats/team-stats/2014/' + tab.name;
+        fetchStats({'url': url});
+    }
+
+    function fetchLeagueStats() {
+
+    }
 
     function log(message) {
         if (typeof console == "object") {
@@ -25,7 +57,7 @@ var stats = function () {
     function addSort(field) {
         var self = this;
         self['sortDirection_' + field] = 1;
-        console.log("field "+field);
+        console.log("field " + field);
         self['sortBy_' + field] = function () {
             self['sortDirection_' + field] = -this['sortDirection_' + field];
             self.teams.sort(function (a, b) {
@@ -71,6 +103,5 @@ var stats = function () {
         self.team = data;
     }
 
-}
 
-    ();
+}();

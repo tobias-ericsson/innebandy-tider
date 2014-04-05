@@ -20,10 +20,12 @@ body {
     body {
         width: 600px;
     }
+
     .game_time {
         float: right;
         margin-top: -20px;
     }
+
     #search_field {
         width: 380px;
     }
@@ -34,11 +36,13 @@ body {
     body {
 
     }
+
     .game_time {
         float: right;
         margin-top: -25px;
         width: 8em;
     }
+
     #search_field {
         width: 18em;
     }
@@ -193,7 +197,7 @@ body {
 /* end content area */
 
 a {
-    color: #663300;
+    /*color: #663300;*/
     text-decoration: none;
     /*
     padding: 2px;
@@ -236,17 +240,40 @@ a:hover {
 
 }
 
+/** START STATS TABLE **/
+table.stats {
+    width: 100%;
+    border: none;
+}
+
 th {
-    text-align: center;
-    color: #660000;
-    padding:3px;
+     text-align: center;
+     color: #660000;
+     padding: 0;
+     margin: 0;
+ }
+
+table.stats th {
+    padding: 0.1em 0;
+}
+
+table.stats th a {
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 2px 8px;
+    background: white;
+    color: #663300;
+}
+table.stats th a:hover {
+    color:#ffffff;
+    background: #663300;
 }
 
 td {
     border-bottom: 1px black solid;
     text-align: center;
     color: #663300;
-    padding: 2px;
+    padding: 5px 4px;
     margin: 2px;
 }
 
@@ -256,3 +283,52 @@ tr {
 }
 
 
+/** START TABS **/
+table.tab {
+    width: 100%;
+    /*border: 1px solid black;
+    border-bottom: none;
+    border-top: none;*/
+}
+
+a.tab {
+    display: block;
+    padding: 8px 30px;
+    background: #544f6b;
+    text-decoration: none;
+    color: #000066;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    border: 1px solid black;
+}
+
+a.tab:hover {
+    color:#ffffff;
+    background: #663300;
+}
+
+#tabs_container {
+    margin: 10px 4px;
+}
+
+a.selectedTab {
+    background: transparent;
+    border: none;
+    color: #000066;
+
+}
+a.selectedTab:hover {
+    background: transparent;
+}
+
+a.leftOfSelectedTab {
+    border-bottom-right-radius: 14px;
+    border: 1px solid black;
+}
+
+a.rightOfSelectedTab {
+    border-bottom-left-radius: 14px;
+    border: 1px solid black;
+}
+
+/** END TABS **/

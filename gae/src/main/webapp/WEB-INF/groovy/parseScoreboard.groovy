@@ -35,7 +35,7 @@ try {
                     game.homeTeam = lineSplitted[0].trim()
                     def regExp = /\d*-\d*.*/
                     def matcher = (lineSplitted[1] =~ regExp)
-                   
+
                     if (matcher.find()) {
 
 
