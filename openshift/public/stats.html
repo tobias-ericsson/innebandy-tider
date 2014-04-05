@@ -39,15 +39,15 @@
             <table class="stats">
                 <thead>
                 <tr>
-                    <th style="text-align: left;min-width: 130px;"><a data-bind="click: sortBy_name">Lag</a>
+                    <th style="text-align: left;min-width: 6em;"><a data-bind="click: sortBy_name">Lag</a>
                     </th>
-                    <th style="min-width: 50px;"><a href="#" data-bind="click: sortBy_gamesPlayed">Matcher</a></th>
-                    <th style="min-width: 50px;"><a href="#" data-bind="click: sortBy_win">Vinst</a></th>
-                    <th style="min-width: 50px;"><a href="#" data-bind="click: sortBy_loss">Förlust</a></th>
-                    <th style="min-width: 65px;">Straffar</th>
-                    <th style="min-width: 65px;">Mål</th>
-                    <th style="text-align: right;min-width: 40px;">
-                        <a href="#" data-bind="click: sortBy_points">Poäng</a></th>
+                    <th style="min-width: 1em;"><a href="#" data-bind="click: sortBy_gamesPlayed">M</a></th>
+                    <th style="min-width: 1em;"><a href="#" data-bind="click: sortBy_win">V</a></th>
+                    <th style="min-width: 1em;"><a href="#" data-bind="click: sortBy_loss">F</a></th>
+                    <th style="min-width: 1em;">S</th>
+                    <th style="min-width: 1em;">Mål</th>
+                    <th style="text-align: right;min-width: 1em;">
+                        <a href="#" data-bind="click: sortBy_points">P</a></th>
                 </tr>
                 </thead>
                 <tr data-bind="visible: teams().length==0">
@@ -60,7 +60,7 @@
                     <td data-bind="text: team.win"></td>
                     <td data-bind="text: team.loss"></td>
                     <td data-bind="text: team.draw"></td>
-                    <td><span data-bind="text: team.goalsFor"></span> - <span
+                    <td><span data-bind="text: team.goalsFor"></span>-<span
                             data-bind="text: team.goalsAgainst"></span>
                     </td>
                     <td style="text-align: right" data-bind="text: team.points"></td>

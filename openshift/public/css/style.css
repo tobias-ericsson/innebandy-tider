@@ -49,7 +49,7 @@ body {
 }
 
 /* Portrait smart phone */
-@media (max-width: 320px) {
+@media (max-width: 20em) {
 
 }
 
@@ -293,12 +293,12 @@ table.tab {
 
 a.tab {
     display: block;
-    padding: 8px 30px;
+    padding: 0.3em 0.8em;
     background: #544f6b;
     text-decoration: none;
     color: #000066;
-    border-top-left-radius: 14px;
-    border-top-right-radius: 14px;
+    border-top-left-radius: 0.6em;
+    border-top-right-radius: 0.6em;
     border: 1px solid black;
 }
 
@@ -308,7 +308,7 @@ a.tab:hover {
 }
 
 #tabs_container {
-    margin: 10px 4px;
+    margin: 0.3em 0.1em;
 }
 
 a.selectedTab {
