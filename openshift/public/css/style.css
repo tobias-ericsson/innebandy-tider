@@ -145,6 +145,8 @@ body {
 
 }
 
+
+
 /* end search area */
 
 /* start content area */
@@ -270,11 +272,15 @@ table.stats th a:hover {
 }
 
 td {
-    border-bottom: 1px black solid;
-    text-align: center;
-    color: #663300;
+    color: #ffffff;
     padding: 5px 4px;
     margin: 2px;
+}
+
+table.stats td {
+    color: #663300;
+    text-align: center;
+    border-bottom: 1px black solid;
 }
 
 tr {
@@ -332,3 +338,26 @@ a.rightOfSelectedTab {
 }
 
 /** END TABS **/
+
+.nav {
+    font-size: 0.85em;
+    color: #ffffff;
+    transform:rotate(45deg);
+    -ms-transform:rotate(45deg); /* IE 9 */
+    -webkit-transform:rotate(45deg); /* Opera, Chrome, and Safari */
+    padding: 0.6em;
+    text-align: center;
+    vertical-align: middle;
+}
+#nav {
+    background-color: #000066;
+    border: 1px solid black;
+    width: 3.8em;
+    height: 3.8em;
+    float:right;
+    border-bottom-left-radius: 3.8em;
+}
+#nav:hover {
+    background:#663300;
+}
+

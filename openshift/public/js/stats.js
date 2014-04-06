@@ -82,7 +82,8 @@ var stats = function () {
                 200: function (data) {
                     log("hits " + JSON.stringify(data));
                     myViewModel.teams.removeAll();
-                    pushTeamsToViewModel(data)
+                    pushTeamsToViewModel(data);
+                    myViewModel.sortDirection_points = 1;
                     myViewModel.sortBy_points();
                 }
             }
