@@ -4,13 +4,14 @@ package domain
  * Created by Tobias on 2014-03-16.
  */
 class Team {
-    String name, league
+    String fullName, shortName, league
     int win, loss, draw, goalsAgainst, goalsFor, gamesPlayed, points
 
     @Override
     public String toString() {
         return "Team{" +
-                "name='" + name + '\'' +
+                "fullName='" + fullName + '\'' +
+                ", shortName='" + shortName + '\'' +
                 ", league='" + league + '\'' +
                 ", win=" + win +
                 ", loss=" + loss +

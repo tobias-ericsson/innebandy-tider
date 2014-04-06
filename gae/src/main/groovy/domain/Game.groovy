@@ -5,6 +5,8 @@ public class Game {
     String league
     String homeTeam
     String awayTeam
+    String homeTeamShort
+    String awayTeamShort
     Integer homeGoals
     Integer awayGoals
     String time

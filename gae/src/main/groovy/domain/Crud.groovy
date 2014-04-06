@@ -12,15 +12,67 @@ import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit
 public abstract class Crud {
 
     static def log = new GroovyLogger(Crud.simpleName)
+    static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService()
 
-    static String createId(Game game) {
+    static Game updateTeams(Game game) {
+        List<Team> teams = readAllTeamsForLeagueYear(game.league, game.year)
+        def homeTeam = findOrUpdateTeamByName(game.homeTeam,teams)
+        def awayTeam = findOrUpdateTeamByName(game.awayTeam,teams)
+        if (homeTeam)
+        saveTeam(homeTeam)
+        saveTeam(awayTeam)
+        game.homeTeam = homeTeam.fullName
+        game.awayTeam = awayTeam.fullName
+        game.homeTeamShort = homeTeam.shortName
+        game.awayTeamShort = awayTeam.shortName
         String id = game.league + "-" + game.date + "-" + game.homeTeam + "-" + game.awayTeam
-        return URLEncoder.encode(id.replaceAll(" ", ""), "UTF-8")
+        game.id = URLEncoder.encode(id.replaceAll(" ", ""), "UTF-8")
+        return game
+    }
+
+    static def findOrUpdateTeamByName(String teamName, def teams) {
+        Team team = teams.find({ it.fullName.equalsIgnoreCase(teamName) })
+        if (team) {
+            return team;
+        }
+        team = teams.find({ it.shortName.equalsIgnoreCase(teamName) })
+        if (team) {
+            return team;
+        }
+        team = teams.find({ it.fullName.contains(teamName) })
+        if (team) {
+            team.shortName = teamName
+            saveTeam(team);
+            return team;
+        }
+        team = teams.find({ teamName.contains(it.fullName) })
+        if (team) {
+            deleteTeam(team)
+            team.fullName = teamName
+            saveTeam(team)
+            return team;
+        }
+        team = new Team(fullName: teamName, shortName: teamName)
+        saveTeam(team);
+        return team;
+    }
+
+    static void deleteTeam(Team team) {
+        Entity entity = datastore.get("team", team.fullName)
+        log.info("delete team " +team.fullName)
+        entity.delete()
+    }
+
+    static void saveTeam(Team team) {
+        Entity entity = new Entity("team", team.fullName)
+        entity.fullName = team.fullName
+        entity.shortName = team.shortName
+        log.info("save team " +team.fullName)
+        entity.save()
     }
 
     static void saveGame(Game game) {
-        game.id = createId(game)
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService()
+        game = updateTeams(game)
         String today = Util.today()
         Entity entity
         try {
@@ -72,9 +124,32 @@ public abstract class Crud {
         return false
     }
 
-    static List<Game> readAllPlayedGamesForLeagueYear(String league, int year) {
+    static List<Team> readAllTeamsForLeagueYear(String league, int year) {
         // Get the Datastore Service
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService()
+
+        //Query.FilterPredicate leagueFilter = new Query.FilterPredicate("league", Query.FilterOperator.EQUAL, league)
+        //Query.FilterPredicate yearFilter = new Query.FilterPredicate("year", Query.FilterOperator.EQUAL, year)
+        //Query.Filter compositeFilter = Query.CompositeFilterOperator.and(leagueFilter, yearFilter)
+        def query = new Query("team") //.setFilter(compositeFilter)
+
+        /*
+        filter = new Query.FilterPredicate("date",Query.FilterOperator.LESS_THAN_OR_EQUAL, Util.today())
+        query.setFilter(filter)*/
+
+        PreparedQuery preparedQuery = datastore.prepare(query)
+        def entities = preparedQuery.asList(withLimit(100))
+
+        List<Team> teamList = []
+        entities.each {
+            log.info(it.toString())
+            teamList.add(mapEntityToTeam(it))
+        }
+        return teamList
+
+    }
+
+    static List<Game> readAllPlayedGamesForLeagueYear(String league, int year) {
 
         Query.FilterPredicate leagueFilter = new Query.FilterPredicate("league", Query.FilterOperator.EQUAL, league)
         Query.FilterPredicate yearFilter = new Query.FilterPredicate("year", Query.FilterOperator.EQUAL, year)
@@ -103,8 +178,6 @@ public abstract class Crud {
     }
 
     static List<Game> readAllGames() {
-        // Get the Datastore Service
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService()
 
         // query the scripts stored in the datastore
 // "savedscript" corresponds to the entity table containing the scripts' text
@@ -140,7 +213,15 @@ public abstract class Crud {
         g.awayGoals = entity.awayGoals
         g.shoutOut = entity.shoutOut
         g.league = entity.league
-        g.id = entity.id ? createId(g) : createId(g)
+        g.id = entity.id //? createId(g) : createId(g)
         return g
+    }
+
+    private static Team mapEntityToTeam(Entity entity) {
+        Team t = new Team()
+        t.fullName = entity.fullName
+        t.shortName = entity.shortName
+        t.league = entity.league
+        return t
     }
 }

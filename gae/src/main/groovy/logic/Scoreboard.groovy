@@ -22,8 +22,8 @@ class Scoreboard {
         Map<String, Team> teams = new HashMap<>()
         games.each { Game game ->
             if (game.homeGoals != null && game.awayGoals != null) {
-                Team homeTeam = teams.get(game.homeTeam, new Team(name: game.homeTeam, league: game.league))
-                Team awayTeam = teams.get(game.awayTeam, new Team(name: game.awayTeam, league: game.league))
+                Team homeTeam = teams.get(game.homeTeam, new Team(fullName: game.homeTeam, league: game.league))
+                Team awayTeam = teams.get(game.awayTeam, new Team(fullName: game.awayTeam, league: game.league))
                 int points = game.shoutOut ? 2 : 3
                 if (game.homeGoals > game.awayGoals) {
                     homeTeam.win += 1
@@ -42,12 +42,34 @@ class Scoreboard {
                 awayTeam.goalsFor += game.awayGoals
                 awayTeam.goalsAgainst += game.homeGoals
 
-                teams.put(homeTeam.name, homeTeam)
-                teams.put(awayTeam.name, awayTeam)
+                teams.put(homeTeam.fullName, homeTeam)
+                teams.put(awayTeam.fullName, awayTeam)
             }
         }
         return teams
     }
 
-
+    static def findOrUpdateTeamByName(String teamName, def teams) {
+        Team team = teams.find({ it.fullName.equalsIgnoreCase(teamName) });
+        if (team) {
+            return [team,false];
+        }
+        team = teams.find({ it.shortName.equalsIgnoreCase(teamName) });
+        if (team) {
+            team.shortName = teamName
+            return [team,false];
+        }
+        team = teams.find({ it.fullName.contains(teamName) });
+        if (team) {
+            team.shortName = teamName
+            return [team,true];
+        }
+        team = teams.find({ teamName.contains(it.fullName) });
+        if (team) {
+            team.fullName = teamName
+            return [team,true];
+        }
+        team = new Team(fullName: teamName, shortName: teamName);
+        return [team,true];
+    }
 }
