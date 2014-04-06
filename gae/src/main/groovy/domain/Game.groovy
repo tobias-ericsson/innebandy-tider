@@ -11,7 +11,7 @@ public class Game {
     String date
     Integer year
     String score;
-    Boolean shoutOut
+    Boolean shoutOut;
     String place
 
 
