@@ -18,9 +18,6 @@ public abstract class Crud {
         List<Team> teams = readAllTeamsForLeagueYear(game.league, game.year)
         def homeTeam = findOrUpdateTeamByName(game.homeTeam,teams)
         def awayTeam = findOrUpdateTeamByName(game.awayTeam,teams)
-        if (homeTeam)
-        saveTeam(homeTeam)
-        saveTeam(awayTeam)
         game.homeTeam = homeTeam.fullName
         game.awayTeam = awayTeam.fullName
         game.homeTeamShort = homeTeam.shortName
@@ -85,6 +82,8 @@ public abstract class Crud {
             entity.date = game.date
             entity.homeTeam = game.homeTeam
             entity.awayTeam = game.awayTeam
+            entity.homeTeamShort = game.homeTeamShort
+            entity.awayTeamShort = game.awayTeamShort
             entity.league = game.league
             entity.updated = today
         }
