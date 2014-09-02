@@ -1,5 +1,6 @@
 <% include '/WEB-INF/includes/header.gtpl' %>
 <center>
+    <h2>V2</h2>
     <p><a href="/cron/ping">ping</a></p>
     <p><a href="/cron/parse-scoreboard?file=M1v14sd.txt">parse scoreboard</a></p>
     <p><a href="/cron/update-scoreboard">update scoreboard</a></p>
