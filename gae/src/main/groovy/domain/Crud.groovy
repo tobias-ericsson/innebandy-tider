@@ -176,12 +176,13 @@ public abstract class Crud {
         return []
     }
 
-    static List<Game> readAllGames() {
+    static List<Game> readAllGamesForYear(int year) {
 
         // query the scripts stored in the datastore
 // "savedscript" corresponds to the entity table containing the scripts' text
 
-        def query = new Query("game")
+        Query.FilterPredicate yearFilter = new Query.FilterPredicate("year", Query.FilterOperator.EQUAL, year)
+        def query = new Query("game").setFilter(yearFilter)
 // sort results by descending order of the creation date
         //query.addSort("dateCreated", Query.SortDirection.DESCENDING)
 

@@ -5,7 +5,7 @@ import logic.Sender
 String name = "Update Schedule"
 log.info(name)
 
-List<Game> games = Crud.readAllGames()
+List<Game> games = Crud.readAllGamesForYear(domain.Properties.YEAR)
 Sender.sendGames(games)
 request.setAttribute 'header', name
 request.setAttribute 'games', games
