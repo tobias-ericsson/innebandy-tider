@@ -121,7 +121,7 @@ var mySpace = function () {
                     log("got 404");
                 },
                 200: function (data) {
-                    log("hits " + JSON.stringify(data.total));
+                    log("data " + JSON.stringify(data));
                     myViewModel.games.removeAll();
                     if (data.total > 0) {
                         saveSearchStringInLocalStorage();
@@ -137,17 +137,19 @@ var mySpace = function () {
         for (index in games) {
             log("game " + index);
             var source = games[index]._source.doc;
-            log(JSON.stringify(source));
+            log("source "+JSON.stringify(source));
             myViewModel.games.push(new Game(source));
         }
     }
 
     function Game(data) {
         var self = this;
-        self.id = data.id;
-        self.game = data;
-        self.dayOfWeek = dayOfWeek(data.date);
-        self.niceDate = niceDate(data.date);
+        if (data) {
+            self.id = data.id;
+            self.game = data;
+            self.dayOfWeek = dayOfWeek(data.date);
+            self.niceDate = niceDate(data.date);
+        }
     }
 
     function niceDate(date) {
