@@ -137,7 +137,7 @@ public abstract class Crud {
         query.setFilter(filter)*/
 
         PreparedQuery preparedQuery = datastore.prepare(query)
-        def entities = preparedQuery.asList(withLimit(100))
+        def entities = preparedQuery.asList(withLimit(1000))
 
         List<Team> teamList = []
         entities.each {
@@ -192,7 +192,7 @@ public abstract class Crud {
         PreparedQuery preparedQuery = datastore.prepare(query)
 
 // return only the first 10 results
-        def entities = preparedQuery.asList(withLimit(500))
+        def entities = preparedQuery.asList(withLimit(2000))
 
         List<Game> gameList = []
         entities.each {
