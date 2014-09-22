@@ -11,27 +11,27 @@
         <schedule>every 110 minutes</schedule>
     </cron>
     <cron>
-        <url>/cron/parseScoreBoard?file=M1v14sd.txt</url>
+        <url>/cron/parseScoreBoard?file=M1h14sd.txt</url>
         <description>parse scoreboard from http://m-ligan.net/</description>
         <schedule>every day 01:00</schedule>
     </cron>
     <cron>
-        <url>/cron/parseScoreBoard?file=M2v14sd.txt</url>
+        <url>/cron/parseScoreBoard?file=M2h14sd.txt</url>
         <description>parse scoreboard from http://m-ligan.net/</description>
         <schedule>every day 01:15</schedule>
     </cron>
     <cron>
-        <url>/cron/parseScoreBoard?file=M3v14sd.txt</url>
+        <url>/cron/parseScoreBoard?file=M3h14sd.txt</url>
         <description>parse scoreboard from http://m-ligan.net/</description>
         <schedule>every day 01:30</schedule>
     </cron>
     <cron>
-        <url>/cron/parseScoreBoard?file=M4v14sd.txt</url>
+        <url>/cron/parseScoreBoard?file=M4h14sd.txt</url>
         <description>parse scoreboard from http://m-ligan.net/</description>
         <schedule>every day 01:45</schedule>
     </cron>
     <cron>
-        <url>/cron/parseScoreBoard?file=M5v14sd.txt</url>
+        <url>/cron/parseScoreBoard?file=M5h14sd.txt</url>
         <description>parse scoreboard from http://m-ligan.net/</description>
         <schedule>every day 02:00</schedule>
     </cron>

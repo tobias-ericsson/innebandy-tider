@@ -85,6 +85,7 @@ public abstract class Crud {
             entity.homeTeamShort = game.homeTeamShort
             entity.awayTeamShort = game.awayTeamShort
             entity.league = game.league
+            entity.place = game.place
             entity.updated = today
         }
 
@@ -105,6 +106,11 @@ public abstract class Crud {
 
         if (shouldUpdate(entity.shoutOut, game.shoutOut)) {
             entity.shoutOut = game.shoutOut
+            entity.updated = today
+        }
+
+        if (shouldUpdate(entity.place, game.place)) {
+            entity.place = game.place
             entity.updated = today
         }
 
@@ -154,7 +160,9 @@ public abstract class Crud {
         Query.FilterPredicate yearFilter = new Query.FilterPredicate("year", Query.FilterOperator.EQUAL, year)
         Query.FilterPredicate beforeTodayFilter = new Query.FilterPredicate("date",
                 Query.FilterOperator.LESS_THAN_OR_EQUAL, Util.today())
-        Query.Filter compositeFilter = Query.CompositeFilterOperator.and(leagueFilter, yearFilter, beforeTodayFilter)
+        Query.FilterPredicate afterSummerFilter = new Query.FilterPredicate("date",
+                Query.FilterOperator.GREATER_THAN_OR_EQUAL, year+"-07-25 22:00")
+        Query.Filter compositeFilter = Query.CompositeFilterOperator.and(leagueFilter, yearFilter, beforeTodayFilter, afterSummerFilter)
         def query = new Query("game").setFilter(compositeFilter)
 
         /*
@@ -213,6 +221,7 @@ public abstract class Crud {
         g.awayGoals = entity.awayGoals
         g.shoutOut = entity.shoutOut
         g.league = entity.league
+        g.place = entity.place
         g.id = entity.id //? createId(g) : createId(g)
         return g
     }
