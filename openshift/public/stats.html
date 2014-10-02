@@ -69,6 +69,38 @@
                 </tr>
                 </tbody>
             </table>
+			<br />
+			<br />
+			<table class="stats">
+                <thead>
+                <tr>
+					<th style="text-align: left;min-width: 6em;"><a data-bind="click: sortBy_name">Namn</a>
+                    </th>
+                    <th style="text-align: left;min-width: 6em;"><a data-bind="click: sortBy_name">Lag</a>
+                    </th>
+                    <th style="min-width: 1em;"><a href="#" data-bind="click: sortBy_gamesPlayed">Mål</a></th>
+                    <th style="min-width: 1em;"><a href="#" data-bind="click: sortBy_win">Assist</a></th>
+                    <th style="min-width: 1em;"><a href="#" data-bind="click: sortBy_loss">Spelade</a></th>
+                    <th style="text-align: right;min-width: 1em;"><a href="#" data-bind="click: sortBy_loss">P</th>
+                </tr>
+                </thead>
+                <tr data-bind="visible: teams().length==0">
+                    <td colspan="8"><p class="game" data-bind="visible: teams().length==0">Inga spelare funna</p></td>
+                </tr>
+                <tbody data-bind="foreach: teams">
+                <tr>
+                    <td style="text-align: left" data-bind="text: team.fullName"></td>
+                    <td data-bind="text: team.gamesPlayed"></td>
+                    <td data-bind="text: team.win"></td>
+                    <td data-bind="text: team.loss"></td>
+                    <td data-bind="text: team.draw"></td>
+                    <td><span data-bind="text: team.goalsFor"></span>-<span
+                            data-bind="text: team.goalsAgainst"></span>
+                    </td>
+                    <td style="text-align: right" data-bind="text: team.points"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
